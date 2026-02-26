@@ -21,7 +21,6 @@ class Producer_Consumer {
       std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
   }
-
   void consume() {
     while (running_) {
       std::unique_lock<std::mutex> lock(m_mutex);
