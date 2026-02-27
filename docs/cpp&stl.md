@@ -1,5 +1,24 @@
 # C++
 
+## 多态
+
+### 虚表的产生以及虚函数的访问过程
+
+虚表是编译阶段生成的一个全局只读的函数指针数组，如果是派生类，如果重写了基类的虚函数，派生类虚表对应位置会替换为自身的函数指针
+
+虚表指针（vptr) 是每个含虚函数的对象隐含的成员变量（通常在对象的最开头），用来指向所属的需函数表。（**vptr 赋值** ：在**构造函数的初始化列表执行完毕后，构造函数体执行之前）**
+
+调用虚函数的访问流程： 取vptr -> 找vtable -> 根据偏移量找函数地址 -> 执行函数
+
+### 多态基类声明虚虚构函数
+
+基类指针指向派生类对象时，若析构函数非虚，会导致派生类析构函数不执行，引发内存泄露
+
+## **新特性**
+
+### **右值引用**
+
+
 # stl
 
 ## c++常见问题
@@ -46,14 +65,24 @@ emplace_back: 直接在vector的内存空间就地构造对象，跳过“先创
 
 一个类型转换工具，将左值强制转换为右值引用，让编译器认为这个对象“可以被移动”
 
-atomic变量的内存模型
+### atomic变量的内存序
 
-如何防止死锁
+背景：编译器优化导致程序实际执行顺序跟代码顺序不完全一致
+
+比如 x = 0 , y = 0
+
+thread 1: x=1; y =1
+
+thread 2 while(y!=1); assert(x == 1) // 可能会失败
+
+以及现代计算机体系结构的特点：一个核赋值后在另一个核心中并不立马可见
+
+### 如何防止死锁
+
+导致死锁的4个必要条件：环形依赖（按固定顺序获取资源） ； 互斥（ 不可抢占（支持抢占）；持有且等待（一次性获取资源；获取一个资源后立刻释放另一个）
 
 # 参考
 
-[https://wizardforcel.gitbooks.io/effective-cpp/content/index.html](https://wizardforcel.gitbooks.io/effective-cpp/content/index.html)
+[https://wizardforcel.gitbooks.io/effective-cpp/content/index.html](https://wizardforcel.gitbooks.io/effective-cpp/content/index.html)  C++ 进阶的核心指南， “避坑 + 最佳实践“
 
-指导开发者编写安全、高效、易维护的 C++ 代码，而非替代 C++ 标准或教程
-
-https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines
+[https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines]([https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines]())  指导开发者编写安全、高效、易维护的 C++ 代码，而非替代 C++ 标准或教程
