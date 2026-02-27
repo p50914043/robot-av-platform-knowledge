@@ -36,3 +36,8 @@ SOME/IP通信原理：
 ## mqtt
 
 
+# 序列化框架
+
+## protobuf
+
+## cdr 
