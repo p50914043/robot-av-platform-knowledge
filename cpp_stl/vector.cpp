@@ -6,8 +6,10 @@
 
 class Obj {
  public:
-  Obj(int i) : i_(i) {}
-  ~Obj() {}
+  Obj(int i) : i_(i) {
+  }
+  ~Obj() {
+  }
 
   Obj(const Obj&) = delete;
   Obj& operator=(const Obj&) = delete;
@@ -27,7 +29,7 @@ int main() {
   auto end = std::chrono::steady_clock::now();
   auto diff = std::chrono::duration_cast<std::chrono::milliseconds>(end - now);
   std::cout << "time: " << diff.count() << " ms" << std::endl;
-
+  vec.size();
   now = std::chrono::steady_clock::now();
   for (int i = 0; i < 2000000; i++) {
     vec.emplace_back(i);  // 当size 等于 capacity 时，会增加一倍的 capacity
